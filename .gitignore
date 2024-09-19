@@ -172,6 +172,9 @@ cython_debug/
 *.wal
 .project
 .dbeaver
+*.DS store
+
 
 *social_media_yt.csv
+
 
