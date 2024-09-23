@@ -3,7 +3,7 @@ desc;
 SELECT
 	*
 FROM
-	information_schema.schemata;
+	information_schema.schemata WHERE catalog_name = 'youtube_data ';
 
 CREATE SCHEMA IF NOT EXISTS marts;
 
