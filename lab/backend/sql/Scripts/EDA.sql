@@ -25,69 +25,71 @@ SELECT * FROM  innehall.diagramdata;-- ORDER BY "Visningstid (timmar)";
 SELECT STRFTIME('%Y-%m-%d', Datum), Visningar FROM innehall.totalt;
 
 
--- Do some EDA for Operativesystem schema
 
 
--- Print Daigrammdata in Operativesystem Scheam
+-- EDA for Operativesystem schema
+SELECT * FROM  operativsystem.tabelldata t ;
 
-SELECT * FROM  operativsystem.diagramdata d ;
+SELECT * FROM operativsystem.totalt;
+
 
 SELECT
-	STRFTIME('%y-%m-%d' ,
-	Datum) AS Datum ,
-	Operativsystem ,
-	Visningar
-FROM
-	operativsystem.diagramdata
-ORDER BY
-	Datum DESC;
+    STRFTIME('%y-%m-%d', OPTOTAL.Datum) AS Datum,
+    OPTABLE.Operativsystem,
+    OPTABLE.Visningar,
+    OPTABLE."Visningstid (timmar)" 
+FROM  
+    operativsystem.tabelldata AS optable
+CROSS JOIN 
+    operativsystem.totalt  AS optotal
+GROUP BY
+    OPTABLE.Operativsystem,
+    STRFTIME('%y-%m-%d', OPTOTAL.Datum), 
+    OPTABLE.Visningar,
+    OPTABLE."Visningstid (timmar)";
 
 
--- Print tabledata in Operativesystem Schema
 
-SELECT * EXCLUDE("Genomsnittlig visningslängd") FROM operativsystem.tabelldata;
+-- EDA for innerhallstyp
+   
+   
+SELECT * FROM  geografi.diagramdata d ;
+   
+SELECT  * FROM  geografi.tabelldata t ;
+  
+SELECT * FROM  geografi.totalt t ;
 
 
--- Print totaldata in Operativesystem Schema
 
-SELECT * FROM operativsystem.totalt t ;
-
-
-WITH operative_table AS (SELECT * FROM operativsystem.tabelldata),
-     operative_total AS (SELECT * FROM operativsystem.totalt)
 SELECT
-    STRFTIME('%y-%m-%d', ototal.Datum) AS Datum,
-    otable.*
-FROM
-    operative_total AS ototal
-LEFT JOIN operative_table AS otable
-ON ototal.Datum = otable.Operativsystem;
+    STRFTIME('%y-%m-%d', GEO_TOT.Datum) AS Datum,
+    GEO_TAB.* 
+FROM  
+    geografi.tabelldata AS geo_tab
+CROSS JOIN
+    geografi.totalt  AS geo_tot
+GROUP BY
+    Datum, GEO_TAB.Geografi , GEO_TAB.Visningar , GEO_TAB."Visningstid (timmar)" , GEO_TAB."Genomsnittlig visningslängd" ;
 
 
 
 
 
 
-SELECT * FROM tittare.tabelldata_alder ta ;
 
-SELECT * FROM  tittare.tabelldata_kon tk ;
 
-WITH tittare_table AS (
-SELECT
-	*
-FROM
-	tittare.tabelldata_alder ta) ,
-tittare_total AS (
-SELECT
-	*
-FROM
-	tittare.tabelldata_kon tk)
-SELECT
-	 Visningar(%) AS Visningar
-FROM
-	tittare_total AS tit_tot
-LEFT JOIN tittare_table AS tit_tab
-ON tit_tot.Visningar = tit_tab.Visningar;
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 
