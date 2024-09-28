@@ -25,4 +25,4 @@ FROM
 
 -- checks
 SELECT * FROM marts.device_views_date;
-SELECT * FRO M marts.device_summary;
+SELECT * FROM marts.device_summary;

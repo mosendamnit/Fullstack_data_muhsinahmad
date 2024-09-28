@@ -14,3 +14,13 @@ class ViewsTrend:
 
 # create more graphs here
 
+class OperativeViews:
+    def __init__(self) -> None:
+        self.df = QueryDatabase("SELECT * FROM marts.operativesystem_per_view").df
+        st.markdown(" See plot between Operativesystem againist Viewers")
+        print(self.df)
+
+
+    def plot_display(self):
+        fig = px.line(self.df , x = "Datum" , y = "Visningar")
+        st.plotly_chart(fig)

@@ -21,7 +21,25 @@ class ContentKPI:
             with col: 
                 st.metric(kpi, round(kpis[kpi]))
         st.dataframe(df)
-
-# create more KPIs here
 class DeviceKPI:
-    pass 
+    def __init__(self) -> None:
+        self._device = QueryDatabase("SELECT * FROM marts.operativesystem_per_view").df
+
+    def operative_views(self):
+        df = self._device
+        st.markdown("## KPI for Operative System")
+
+        # Corrected dictionary name and key (no space after 'Visning')
+        kpis = {
+            "operative system" : len(df["Operativsystem"].unique()),
+            "Visningar": df["Visningar"].unique().sum(),
+            "Visning Timmar": df["Visningstid (timmar)"].unique().sum(),
+        }
+
+        # Using the correct variable name 'kpis' in the for loop
+        for col, kpi in zip(st.columns(len(kpis)), kpis):
+            with col:
+                st.metric(kpi, round(kpis[kpi]))
+
+        st.dataframe(df)
+

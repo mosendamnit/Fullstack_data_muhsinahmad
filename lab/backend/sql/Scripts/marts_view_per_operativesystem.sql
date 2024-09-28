@@ -1,19 +1,20 @@
 CREATE TABLE IF NOT EXISTS marts.operativesystem_per_view AS
 (
 SELECT
-    STRFTIME('%y-%m-%d', OPTOTAL.Datum) AS Datum,
-    OPTABLE.Operativsystem,
-    OPTABLE.Visningar,
-    OPTABLE."Visningstid (timmar)" 
+    STRFTIME('%Y-%m-%d', optotal."Datum") AS Datum,
+    optable."Operativsystem",
+    SUM(optable."Visningar") AS Total_Visningar,
+    SUM(optable."Visningstid (timmar)") AS Total_Visningstid_timmar
 FROM  
     operativsystem.tabelldata AS optable
 CROSS JOIN 
-    operativsystem.totalt  AS optotal
+    operativsystem.totalt AS optotal
 GROUP BY
-    OPTABLE.Operativsystem,
-    STRFTIME('%y-%m-%d', OPTOTAL.Datum), 
-    OPTABLE.Visningar,
-    OPTABLE."Visningstid (timmar)"
+    STRFTIME('%Y-%m-%d', optotal."Datum"),
+    optable."Operativsystem"
+ORDER BY
+    STRFTIME('%Y-%m-%d', optotal."Datum"),
+    optable."Operativsystem"
 );
 
 CREATE TABLE IF NOT EXISTS marts.views_per_geografi AS 
