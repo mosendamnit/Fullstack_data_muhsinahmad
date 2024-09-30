@@ -29,17 +29,39 @@ class DeviceKPI:
         df = self._device
         st.markdown("## KPI for Operative System")
 
-        # Corrected dictionary name and key (no space after 'Visning')
+        
         kpis = {
             "operative system" : len(df["Operativsystem"].unique()),
-            "Visningar": df["Visningar"].unique().sum(),
-            "Visning Timmar": df["Visningstid (timmar)"].unique().sum(),
+            "Visningar": df["Total_Visningar"].sum(),
+            "Visning Timmar": df["Total_Visningstid_timmar"].unique().sum(),
         }
 
-        # Using the correct variable name 'kpis' in the for loop
+        
         for col, kpi in zip(st.columns(len(kpis)), kpis):
             with col:
                 st.metric(kpi, round(kpis[kpi]))
 
         st.dataframe(df)
 
+class GeoKPI:
+    def __init__(self):
+        self._geografi = QueryDatabase("SELECT * FROM marts.views_per_geografi; ").df 
+
+    def viewsPer_geografi(self):
+        df = self._geografi
+        st.markdown("## Viewers Per State")
+
+        start_date = df["Datum"].min()
+        end_date = df["Datum"].max()
+
+
+        Kpis = {
+            "Date" : f"{start_date} to {end_date}",
+            "Total_Views" : df["Total_Viewers"].sum()
+        }
+
+        for col, kpi in zip(st.columns(len(Kpis)), Kpis):
+            with col:
+                st.metric(kpi, (Kpis[kpi]))
+
+        st.dataframe(df)

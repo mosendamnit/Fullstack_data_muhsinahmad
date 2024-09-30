@@ -26,7 +26,6 @@ SELECT STRFTIME('%Y-%m-%d', Datum), Visningar FROM innehall.totalt;
 
 
 
-
 -- EDA for Operativesystem schema
 SELECT * FROM  operativsystem.tabelldata t ;
 
@@ -78,7 +77,7 @@ SELECT * FROM  geografi.totalt t ;
 
 
 
-SELECT
+/*SELECT
     STRFTIME('%y-%m-%d', GEO_TOT.Datum) AS Datum,
     GEO_TAB.* 
 FROM  
@@ -86,26 +85,28 @@ FROM
 CROSS JOIN
     geografi.totalt  AS geo_tot
 GROUP BY
-    Datum, GEO_TAB.Geografi , GEO_TAB.Visningar , GEO_TAB."Visningstid (timmar)" , GEO_TAB."Genomsnittlig visningslängd" ;
-
-
-
-
-
-
-
-
-
-
-
+    Datum, GEO_TAB.Geografi , 
+   GEO_TAB.Visningar , GEO_TAB."Visningstid (timmar)" , 
+  GEO_TAB."Genomsnittlig visningslängd" ;*/
  
 
-
-
-
-
-
-
+ 
+ 
+ 
+SELECT 
+    STRFTIME('%y-%m-%d', geo_dia.Datum) AS Datum,
+    GROUP_CONCAT(DISTINCT geo_dia.Geografi) AS Geografi,
+    MAX(geo_tot.Visningar) AS Total_Viewers
+FROM 
+    geografi.diagramdata AS geo_dia
+LEFT JOIN
+    geografi.totalt AS geo_tot
+ON
+    geo_dia.Datum = geo_tot.Datum
+GROUP BY 
+    geo_dia.Datum
+ORDER BY 
+    geo_dia.Datum;
 
 
 
