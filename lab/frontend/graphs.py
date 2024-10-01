@@ -20,8 +20,8 @@ class OperativeViews:
 
 
     def plot_display(self):
-        fig = px.bar(self.df , x = "Datum" , y = "Total_Visningar")
-        st.markdown("## See plot between Operativesystem againist Viewers")
+        fig = px.bar(self.df , x = "Operativsystem" , y = "Total_Visningar")
+        st.markdown("## See plot between Operativesystem againist Total Visningar")
         st.plotly_chart(fig)
 
 

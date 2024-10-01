@@ -31,9 +31,9 @@ class DeviceKPI:
 
         
         kpis = {
-            "operative system" : len(df["Operativsystem"].unique()),
+            "operative system" : len(df["Operativsystem"]),
             "Visningar": df["Total_Visningar"].sum(),
-            "Visning Timmar": df["Total_Visningstid_timmar"].unique().sum(),
+            "Visning Timmar": df["Total_Visningstid_timmar"].sum(),
         }
 
         
