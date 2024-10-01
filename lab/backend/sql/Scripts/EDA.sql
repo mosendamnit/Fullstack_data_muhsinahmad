@@ -66,7 +66,7 @@ ORDER BY
 
 
 
--- EDA for innerhallstyp
+-- EDA for Geografi 
    
    
 SELECT * FROM  geografi.diagramdata d ;
@@ -77,7 +77,7 @@ SELECT * FROM  geografi.totalt t ;
 
 
 
-/*SELECT
+SELECT
     STRFTIME('%y-%m-%d', GEO_TOT.Datum) AS Datum,
     GEO_TAB.* 
 FROM  
@@ -87,7 +87,7 @@ CROSS JOIN
 GROUP BY
     Datum, GEO_TAB.Geografi , 
    GEO_TAB.Visningar , GEO_TAB."Visningstid (timmar)" , 
-  GEO_TAB."Genomsnittlig visningslängd" ;*/
+  GEO_TAB."Genomsnittlig visningslängd" ;
  
 
  
