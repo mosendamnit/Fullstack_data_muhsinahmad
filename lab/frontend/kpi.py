@@ -1,5 +1,6 @@
 import streamlit as st
 from utils.query_database import QueryDatabase
+import pandas as pd
 
 class ContentKPI:
     def __init__(self) -> None:
@@ -43,6 +44,21 @@ class DeviceKPI:
 
         st.dataframe(df)
 
+        st.markdown("## KPI for Operative System in Selection down function ")
+
+        selected_os = st.selectbox(
+            "Select an Operating System",
+            df["Operativsystem"].unique()
+        )
+
+        filtered_df = df[df["Operativsystem"] == selected_os]
+
+        total_visningar = filtered_df["Total_Visningar"].values[0]
+        total_visningstid_timmar = filtered_df["Total_Visningstid_timmar"].values[0]
+
+        st.metric("Total Visningar", total_visningar)
+        st.metric("Total Visningstid (Timmar)", round(total_visningstid_timmar, 2))
+
 class GeoKPI:
     def __init__(self):
         self._geografi = QueryDatabase("SELECT * FROM marts.views_per_geografi; ").df 
@@ -63,5 +79,19 @@ class GeoKPI:
         for col, kpi in zip(st.columns(len(Kpis)), Kpis):
             with col:
                 st.metric(kpi, (Kpis[kpi]))
-
+        
         st.dataframe(df)
+
+
+        st.markdown("## Select down for to see how much total views on selected date")
+
+        select_date = st.selectbox(
+            "Select the date", df["Datum"]
+        )
+
+        filter_tab = df[df["Datum"] == select_date]
+
+        total_viewers = filter_tab["Total_Viewers"].values[0]
+
+        st.metric("Total_Viewers" , total_viewers)
+        
